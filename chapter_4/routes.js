@@ -10,6 +10,15 @@ router.use(function(req,res,next){
 	next();
 });
 
+function ensureAuthenticated(req,res,next){
+	if(req.isAuthenticated()){
+		next()
+	} else {
+		req.flash('info','You must be logged in to see this page.');
+		res.redirect('/login');
+	}
+}
+
 router.get('/',function(req,res,next){
 	User.find()
 		.sort({createdAt: 'desc'})
@@ -60,5 +69,24 @@ router.get('/login', passport.authenticate('login',{
 	failureRedirect:'/login',
 	failureFlash: true
 }))
+
+router.get('/logout',function(req,res){
+	req.logout();
+	res.redirect('/');
+})
+
+router.get('/edit', ensureAuthenticated, function(req,res){
+	res.render('edit');
+})
+
+router.post('/edit',ensureAuthenticated, function(req,res,next){
+	req.user.displayName = req.body.displayname;
+	req.user.bio = req.body.bio;
+	req.user.save(function(err){
+		if(err){next(err);return;}
+		req.flash('info',"profile updated")
+		res.redirect('/edit');
+	});
+});
 
 module.exports = router;

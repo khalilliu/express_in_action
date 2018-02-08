@@ -1,0 +1,21 @@
+<% include header %>
+<% if(entries.length){ %>
+	<% entries.forEach(function(entry){ %>
+		<div class='panel panel-default'>
+			<div class='panel-heading'>
+				<%= entry.title %>
+				<div class='text-muted pull-right'>
+					<%= entry.published.toLocaleTimeString() %>
+				</div>
+				
+			</div>
+			<div class='panel-body'>
+				<%= entry.body %>
+			</div>
+		</div>		
+	<% }) %>
+<% } else { %>
+	No entries! <a href='/new-entry'>Add One</a>
+<% } %>
+
+<% include footer %>

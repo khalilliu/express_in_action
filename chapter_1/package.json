@@ -1,0 +1,17 @@
+{
+  "name": "chapter_1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node routing_example.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "morgan": "^1.9.0"
+  }
+}
